@@ -29,6 +29,8 @@ TwoAxesChart
     Base class for chart with two y-axes (primary and secondary).
 BarLineChart
     A concrete class for combined bar and line chart with dual y-axes.
+SingleAxisBarLineChart
+    A concrete class for combined bar and line chart on a single y-axis.
 
 Notes
 -----
@@ -59,11 +61,11 @@ class Chart:
     This class provides the methods and attributes for creating, configuring,
     and rendering charts in Excel workbooks using pandas DataFrames and openpyxl.
 
-    Parameters:
-    -----------
-    config : Config
+    Parameters
+    ----------
+    config : Config, optional
             Configuration object containing chart and general Excel settings.
-    excel_helper : ExcelHelper
+    excel_helper : ExcelHelper, optional
             Helper object for Excel-specific operations.
 
     Notes
@@ -75,8 +77,17 @@ class Chart:
     charting and image insertion logic.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
-        self.config = config
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize the chart with optional configuration and helper.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper object for Excel-specific operations.
+        """
+        self.config = config or Config()
         self.excel_helper = excel_helper or ExcelHelper(self.config)
 
         # Chart: this must be initialized in `plot` method which should be overriden
@@ -529,8 +540,8 @@ class Chart:
                     Position to insert the chart in the worksheet.
                 suppress_chart_position_warning : bool, optional
                     Suppress warning if chart position is unknown.
-                openpyxl_color : bool, optional
-                    Use default Openpyxl colors for series.
+                custom_colors : bool, optional
+                    Use custom colors for series (do not use default openpyxl colors).
                 nofill : bool, optional
                     Do not fill series with colors.
                 border_line_color : str, optional
@@ -648,10 +659,8 @@ class Chart:
                 )
         # Fill in series with either default Openpyxl colors or SQL2Excel colors
         if (
-            not self.config.OPENPYXL_COLORS
-            and not kwargs.get("openpyxl_color")
-            and not kwargs.get("nofill")
-        ):
+            self.config.CUSTOM_COLORS or kwargs.get("custom_colors")
+        ) and not kwargs.get("nofill"):
             for idx, series in enumerate(self.chart.series):
                 # Recycle colors if required
                 color = self.config.PRIMARY_COLORS[
@@ -698,8 +707,7 @@ class Chart:
 
 
 class LineBasedChart(Chart):
-    """
-    A chart class for creating and customizing line-based charts.
+    """Base class for line-based charts (e.g., line and radar).
 
     Parameters
     ----------
@@ -714,13 +722,37 @@ class LineBasedChart(Chart):
 
     Notes
     -----
-    Reference series are always formatted according to configuration..
+    Reference series are always formatted according to configuration.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a line-based chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def _plot(self, df, ws, **kwargs):
+        """Finalize line/radar chart styling and delegate to the base ``_plot``.
+
+        Applies line width, style, colour, smooth, and marker properties to
+        each series.  Reference series receive special formatting.  Finally
+        delegates to ``Chart._plot`` for general chart placement.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            The data plotted in the chart.
+        ws : Worksheet
+            The target worksheet.
+        **kwargs : dict
+            Forwarded to ``Chart._plot`` and used for line/marker settings.
+        """
         # Default 1.5
         line_width = kwargs.get("line_width", 1.5)
         line_style = kwargs.get("line_style")
@@ -739,12 +771,12 @@ class LineBasedChart(Chart):
                 continue
 
             color = (
-                None  # Use default openpyxl color
-                if self.config.OPENPYXL_COLORS or kwargs.get("openpyxl_color")
-                # Recycle colors if needed
-                else self.config.PRIMARY_COLORS[
+                self.config.PRIMARY_COLORS[
                     (idx - ref_found) % len(self.config.PRIMARY_COLORS)
-                ]
+                ]  # Use SQL2Excel colors
+                if self.config.CUSTOM_COLORS or kwargs.get("custom_colors")
+                # Recycle colors if needed
+                else None
             )
 
             # Use line color if it is user-defined
@@ -759,7 +791,7 @@ class LineBasedChart(Chart):
                 series, marker_symbol, marker_size, color
             )
 
-        # Reference column is always set regardless of config.OPENPYXL_COLORS
+        # Reference column is always set regardless of config.CUSTOM_COLORS
         if self.ref_series_idx is not None:
             if isinstance(self.chart, xl.chart.RadarChart):
                 self.excel_helper.set_line_graphical_properties(
@@ -788,11 +820,7 @@ class LineBasedChart(Chart):
 
 
 class ImageChart(Chart):
-    """
-    A chart class for embedding images or matplotlib figures into Excel worksheets.
-    This class provides methods to add images or matplotlib figures to an Excel worksheet,
-    positioning them relative to dataframes or at specified locations, and configuring their
-    size and placement.
+    """Chart class for embedding images or matplotlib figures into Excel.
 
     Parameters
     ----------
@@ -806,7 +834,16 @@ class ImageChart(Chart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize an image chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def add_image(
@@ -816,6 +853,20 @@ class ImageChart(Chart):
         df=None,
         **kwargs,
     ):
+        """Add an image or matplotlib figure to the worksheet.
+
+        Parameters
+        ----------
+        image_input : str or matplotlib.figure.Figure
+            A file path (str) or a matplotlib ``Figure`` to embed.
+        ws : Worksheet
+            The target worksheet.
+        df : pandas.DataFrame, optional
+            If provided, the DataFrame is written before the image is placed.
+        **kwargs : dict
+            Optional overrides: ``section_heading``, ``width``, ``height``,
+            ``chart_position``, ``row_start``, ``column_start``.
+        """
 
         if isinstance(image_input, str):
             img = Image(image_input)
@@ -897,10 +948,7 @@ class ImageChart(Chart):
 
 # TODO Transparent filling when `self.chart.type='filled'`
 class RadarChart(LineBasedChart):
-    """
-    RadarChart for plotting radar (spider) charts in Excel using pandas DataFrames.
-    This class extends LineBasedChart to provide functionality for creating radar charts
-    in Excel worksheets. It supports customization of chart type, axis scaling, and line width.
+    """Radar (spider) chart.
 
     Parameters
     ----------
@@ -914,10 +962,30 @@ class RadarChart(LineBasedChart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a radar chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def plot(self, df, ws, **kwargs):
+        """Plot a radar chart from *df* into *ws*.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            Data to plot; first column is the category axis.
+        ws : Worksheet
+            The target worksheet.
+        **kwargs : dict
+            Chart customization options (see ``Chart._plot``).
+        """
         self.write_dataframe(df, ws, **kwargs)
 
         self.chart = xl.chart.RadarChart()
@@ -952,10 +1020,7 @@ class RadarChart(LineBasedChart):
 
 
 class LineChart(LineBasedChart):
-    """
-    A class for creating and plotting line charts in Excel worksheets.
-    This class extends `LineBasedChart` and provides functionality to plot a pandas DataFrame as a line chart
-    in an Excel worksheet using the provided configuration and Excel helper utilities.
+    """Line chart.
 
     Parameters
     ----------
@@ -969,10 +1034,30 @@ class LineChart(LineBasedChart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a line chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def plot(self, df, ws, **kwargs):
+        """Plot a line chart from *df* into *ws*.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            Data to plot; first column is the category axis.
+        ws : Worksheet
+            The target worksheet.
+        **kwargs : dict
+            Chart customization options (see ``Chart._plot``).
+        """
         self.write_dataframe(df, ws, **kwargs)
 
         self.chart = xl.chart.LineChart()
@@ -983,9 +1068,7 @@ class LineChart(LineBasedChart):
 
 
 class BarChart(Chart):
-    """
-    A class for creating and customizing bar charts in Excel using data from a pandas DataFrame.
-    This class extends the `Chart` base class and provides methods to plot bar charts with various customization options, such as varying bar colors, adjusting axis tick label positions, and handling negative values. The chart is rendered in an Excel worksheet using the provided Excel helper utilities.
+    """Bar chart.
 
     Parameters
     ----------
@@ -999,7 +1082,16 @@ class BarChart(Chart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a bar chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def plot(self, df, ws, **kwargs):
@@ -1037,11 +1129,7 @@ class BarChart(Chart):
 
 
 class StackedBarChart(Chart):
-    """
-    A chart class for creating stacked bar charts in Excel using data from a pandas DataFrame.
-    This class extends the `Chart` base class and provides functionality to plot stacked bar charts
-    (either percent-stacked or regular stacked) in an Excel worksheet. It leverages the `openpyxl`
-    library for chart creation and formatting.
+    """Stacked or percent-stacked bar chart.
 
     Parameters
     ----------
@@ -1055,7 +1143,16 @@ class StackedBarChart(Chart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a stacked bar chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def plot(self, df, ws, **kwargs):
@@ -1078,8 +1175,7 @@ class StackedBarChart(Chart):
 
 
 class PieChart(Chart):
-    """
-    A class for creating and customizing pie charts in Excel using openpyxl.
+    """Pie chart with data-label customization.
 
     Parameters
     ----------
@@ -1093,7 +1189,16 @@ class PieChart(Chart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a pie chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def plot(self, df, ws, **kwargs):
@@ -1141,20 +1246,19 @@ class PieChart(Chart):
         # Add data labels
         self.chart.dataLabels = data_labels
 
-        if not self.config.OPENPYXL_COLORS and not kwargs.get("openpyxl_color"):
+        if self.config.CUSTOM_COLORS or kwargs.get("custom_colors"):
             self.excel_helper.fill_data_point(self.chart.series[0], len(df))
 
         super()._plot(df, ws, **kwargs)
 
 
 class BubbleChart(Chart):
-    """
-    A chart class for creating bubble charts in Excel using data from a pandas DataFrame.
-    This class inherits from `Chart` and provides functionality to plot a bubble chart
-    in an Excel worksheet. The chart uses the first three columns of the DataFrame as
-    the x-axis, y-axis, and bubble size, respectively. Each row in the DataFrame is
+    """Bubble chart using x, y, and size columns from a DataFrame.
 
-    plotted as a separate series in the bubble chart.
+    The first three columns of the DataFrame are used as the x-axis,
+    y-axis, and bubble size respectively.  Each row is plotted as a
+    separate series.
+
     Parameters
     ----------
     config : Config, optional
@@ -1167,7 +1271,16 @@ class BubbleChart(Chart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a bubble chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def plot(self, df, ws, **kwargs):
@@ -1211,11 +1324,7 @@ class BubbleChart(Chart):
 
 
 class AreaChart(Chart):
-    """
-    A class for creating and plotting area charts in Excel worksheets.
-    This class extends the `Chart` base class and provides functionality to plot area charts
-    using data from a pandas DataFrame. It utilizes the `openpyxl` library to generate and
-    customize area charts within Excel workbooks.
+    """Area chart.
 
     Parameters
     ----------
@@ -1229,7 +1338,16 @@ class AreaChart(Chart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize an area chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
     def plot(self, df, ws, **kwargs):
@@ -1245,13 +1363,7 @@ class AreaChart(Chart):
 
 
 class ScatterChart(Chart):
-    """
-    ScatterChart(config=Config(), excel_helper=None)
-    A chart class for creating and customizing scatter plots in Excel using openpyxl.
-    This class extends the base `Chart` class and provides methods to add data from a pandas DataFrame
-    to an Excel worksheet and generate a scatter chart. It supports flexible data selection, including
-    adjacent and non-adjacent columns, and allows customization of chart appearance such as marker symbols,
-    colors, and styles.
+    """Scatter plot with flexible data selection.
 
     Parameters
     ----------
@@ -1265,12 +1377,39 @@ class ScatterChart(Chart):
     Chart : Base class for all chart types.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a scatter chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
 
-    # TODO possibly violate DRY (do not repeat yourself)
     def _add_data(self, df, ws, from_rows=False, **kwargs):
-        """Add data to chart"""
+        """Add data to a scatter chart.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            The DataFrame containing the data.
+        ws : Worksheet
+            The worksheet where the data resides.
+        from_rows : bool, optional
+            If ``True``, add data from rows.  Currently not supported
+            and raises ``NotImplementedError``.
+        **kwargs : dict
+            Optional overrides: ``data_column_start``, ``data_column_end``,
+            ``data_columns``.
+
+        Raises
+        ------
+        NotImplementedError
+            If *from_rows* is ``True``.
+        """
         if from_rows:
             raise NotImplementedError(
                 "The option `from_row` has not been implemented yet"
@@ -1337,6 +1476,17 @@ class ScatterChart(Chart):
                 self.ref_column = self.max_col
 
     def plot(self, df, ws, **kwargs):
+        """Plot a scatter chart from *df* into *ws*.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            Data to plot; first column is the x-axis.
+        ws : Worksheet
+            The target worksheet.
+        **kwargs : dict
+            Chart customization options (see ``Chart._plot``).
+        """
         self.write_dataframe(df, ws, **kwargs)
 
         self.chart = xl.chart.ScatterChart()
@@ -1379,14 +1529,10 @@ class ScatterChart(Chart):
 # NOTE `data_columns` will not work with TwoAxesChart
 # TODO implement `data_columns`
 class TwoAxesChart(Chart):
-    """
-    Chart with Two Y-Axes for Excel Worksheets.
+    """Base class for charts with two y-axes (primary and secondary).
 
-    This class extends the `Chart` class to support plotting charts with two y-axes
-    (primary and secondary) in Excel worksheets using openpyxl. It is designed to
-    handle dataframes with multiple data columns, plotting the first data column on
-    the primary y-axis and the remaining columns on the secondary y-axis. The class
-    manages chart configuration, data assignment, and axis properties for both axes.
+    The first data column is plotted on the primary y-axis; additional
+    columns are plotted on the secondary y-axis.
 
     Parameters
     ----------
@@ -1398,7 +1544,7 @@ class TwoAxesChart(Chart):
     Attributes
     ----------
     chart : openpyxl.chart.Chart or None
-        The main chart object, representing the combined chart with two y-axes.
+        The main chart object (combined chart).
     chart1 : openpyxl.chart.Chart or None
         The chart object for the primary y-axis.
     chart2 : openpyxl.chart.Chart or None
@@ -1407,20 +1553,39 @@ class TwoAxesChart(Chart):
     See Also
     --------
     Chart : Base class for all chart types.
-
-    Notes
-    -----
-    The first data column is plotted on the primary y-axis; additional columns
-    are plotted on the secondary y-axis.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a two-axes chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
         self.chart = None
         self.chart1 = None
         self.chart2 = None
 
     def plot(self, df, ws, **kwargs):
+        """Plot a two-axes chart from *df* into *ws*.
+
+        The first data column is plotted on the primary axis and the
+        remaining columns on the secondary axis.  Subclasses should set
+        ``self.chart1`` and ``self.chart2`` before calling this method.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            Data to plot.
+        ws : Worksheet
+            The target worksheet.
+        **kwargs : dict
+            Chart customization options (see ``Chart._plot``).
+        """
 
         self.write_dataframe(df, ws, **kwargs)
 
@@ -1439,7 +1604,7 @@ class TwoAxesChart(Chart):
         kwargs["xlabel"] = None
 
         # Leave settings that need to be applied to both figure if present:
-        # width, height, openpyxl_color, nofill, etc
+        # width, height, nofill, etc
 
         # Add data to chart1
         data_columns = kwargs.get("data_columns")
@@ -1488,7 +1653,10 @@ class TwoAxesChart(Chart):
 
         # Set the second y-axis
         self.chart2.y_axis.axId = 200
-        self.chart2.y_axis.crosses = "max"
+        self.chart1.y_axis.crosses = "max"
+
+        # Remove secondary x-axis so both y-axes share the same x-axis
+        # self.chart2.x_axis.delete = True
 
         # Concat the two charts
         # At this point you need to use `self.chart` of the super class
@@ -1517,11 +1685,10 @@ class TwoAxesChart(Chart):
 
 
 class BarLineChart(TwoAxesChart):
-    """
-    A chart class for creating combined Bar and Line charts in Excel using openpyxl.
-    This class extends `TwoAxesChart` and provides functionality to plot a bar chart
-    (as the primary axis) and a line chart (as the secondary axis) on the same Excel worksheet.
-    It allows customization of chart styles, shapes, line properties, and marker properties.
+    """Combined bar and line chart with dual y-axes.
+
+    The bar chart is rendered on the primary y-axis and the line chart
+    on the secondary y-axis.
 
     Parameters
     ----------
@@ -1542,26 +1709,45 @@ class BarLineChart(TwoAxesChart):
     See Also
     --------
     Chart : Base class for all chart types.
-    TwoAxesChart: Parent class.
+    TwoAxesChart : Parent class.
     """
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a bar-line chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
         super().__init__(config, excel_helper)
         self.chart = None
         self.chart1 = xl.chart.BarChart()
         self.chart2 = xl.chart.LineChart()
 
     def plot(self, df, ws, **kwargs):
+        """Plot a combined bar-line chart from *df* into *ws*.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            Data to plot; first column is the category axis.
+        ws : Worksheet
+            The target worksheet.
+        **kwargs : dict
+            Chart customization options (see ``Chart._plot``).
+        """
 
         # Override default
-        openpyxl_color = kwargs.get("openpyxl_color")
-        kwargs["openpyxl_color"] = kwargs.get("openpyxl_color", True)
+        custom_colors = kwargs.get("custom_colors")
+        kwargs["custom_colors"] = kwargs.get("custom_colors", False)
 
         self.chart1.type = "col"
         self.chart1.style = kwargs.get("bar_chart_style", 10)
         self.chart1.shape = kwargs.get("chart_shape", 4)
 
-        #
         super().plot(df, ws, **kwargs)
         self.chart1.y_axis.majorGridlines = None
 
@@ -1569,20 +1755,21 @@ class BarLineChart(TwoAxesChart):
         line_width = kwargs.get("line_width", 1.5)
         line_style = kwargs.get("line_style", "sysDash")
         smooth = kwargs.get("smooth", True)
-        kwargs["openpyxl_color"] = openpyxl_color
+        kwargs["custom_colors"] = custom_colors
 
         for idx, series in enumerate(self.chart2.series):
             idx += 1
             color = (
-                None  # Use default openpyxl color
-                if self.config.OPENPYXL_COLORS or kwargs.get("openpyxl_color")
+                self.config.PRIMARY_COLORS[(idx) % len(self.config.PRIMARY_COLORS)]
+                if self.config.CUSTOM_COLORS or kwargs.get("custom_colors")
                 # Recycle colors if needed
-                else self.config.PRIMARY_COLORS[(idx) % len(self.config.PRIMARY_COLORS)]
+                else None
             )
 
             # Use line color if it is user-defined
-            if not kwargs.get("line_color") and idx == 0:
-                color = "107C10"
+            if not kwargs.get("line_color") and idx == 1:
+                # color = "FD625E"
+                pass
             else:
                 color = kwargs.get("line_color") or color
 
@@ -1601,9 +1788,167 @@ class BarLineChart(TwoAxesChart):
             )
 
 
+class SingleAxisBarLineChart(Chart):
+    """Combined bar and line chart on a single y-axis.
+
+    Parameters
+    ----------
+    config : Config, optional
+            Configuration object containing chart and general Excel settings.
+    excel_helper : ExcelHelper, optional
+            Helper object for Excel-specific operations.
+
+    See Also
+    --------
+    Chart : Base class for all chart types.
+    """
+
+    def __init__(self, config=None, excel_helper=None):
+        """Initialize a single-axis bar-line chart.
+
+        Parameters
+        ----------
+        config : Config, optional
+            Configuration overrides. Defaults to ``Config()``.
+        excel_helper : ExcelHelper, optional
+            Helper instance. Created from *config* when not provided.
+        """
+        super().__init__(config, excel_helper)
+        self.chart = None
+        self.chart1 = xl.chart.BarChart()
+        self.chart2 = xl.chart.LineChart()
+
+    def plot(self, df, ws, **kwargs):
+        """Plot a single-axis bar-line chart from *df* into *ws*.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            Data to plot; first column is the category axis.
+        ws : Worksheet
+            The target worksheet.
+        **kwargs : dict
+            Chart customization options including ``bar_columns`` and
+            ``line_columns`` (see ``Chart._plot``).
+        """
+        self.write_dataframe(df, ws, **kwargs)
+
+        # Identifying bar and line columns
+        bar_cols = kwargs.get("bar_columns")
+        line_cols = kwargs.get("line_columns")
+
+        # Default logic: first data column is bar, the rest are lines
+        if bar_cols is None and line_cols is None:
+            bar_cols = [2]
+            line_cols = list(range(3, len(df.columns) + 1))
+        elif bar_cols is None:
+            all_data_cols = set(range(2, len(df.columns) + 1))
+            bar_cols = sorted(list(all_data_cols - set(line_cols or [])))
+        elif line_cols is None:
+            all_data_cols = set(range(2, len(df.columns) + 1))
+            line_cols = sorted(list(all_data_cols - set(bar_cols or [])))
+
+        # Cache settings for final plot
+        chart_position = kwargs.get("chart_position")
+
+        # Setup Bar Chart
+        self.chart = self.chart1
+        self.chart1.type = "col"
+        self.chart1.style = kwargs.get("bar_chart_style", 10)
+        self.chart1.shape = kwargs.get("chart_shape", 4)
+
+        bar_kwargs = kwargs.copy()
+        bar_kwargs["data_columns"] = bar_cols
+        bar_kwargs["set_categories"] = True
+        bar_kwargs["chart_position"] = "Unknown"
+        bar_kwargs["suppress_chart_position_warning"] = True
+
+        self._add_data(df, ws, **bar_kwargs)
+
+        # Apply bar specific styling here, if any (e.g., vary_color)
+        vary_color = kwargs.get("vary_color") or self.config.BAR_CHART_VARYING_COLOR
+        if vary_color and len(self.chart1.series) == 1:
+            self.excel_helper.fill_data_point(self.chart1.series[0], len(df))
+        else:
+            # Apply colors for multiple bar series if custom_colors is enabled
+            if self.config.CUSTOM_COLORS or kwargs.get("custom_colors"):
+                for idx, series in enumerate(self.chart1.series):
+                    color = self.config.PRIMARY_COLORS[
+                        idx % len(self.config.PRIMARY_COLORS)
+                    ]
+                    border_line_color = kwargs.get("border_line_color")
+                    self.excel_helper.fill(series, color, border_line_color)
+
+        # Setup Line Chart
+        self.chart = self.chart2
+        self.chart2.style = kwargs.get("line_chart_style", 10)
+
+        line_kwargs = kwargs.copy()
+        line_kwargs["data_columns"] = line_cols
+        line_kwargs["set_categories"] = False
+        line_kwargs["chart_position"] = "Unknown"
+        line_kwargs["suppress_chart_position_warning"] = True
+        self._add_data(df, ws, **line_kwargs)
+
+        # Combine
+        self.chart1 += self.chart2
+        self.chart = self.chart1
+        self.chart1.y_axis.majorGridlines = None
+
+        # Apply line specific styling here
+        line_width = kwargs.get("line_width", self.config.LINE_WIDTH)
+        line_style = kwargs.get("line_style", self.config.LINE_STYLE)
+        smooth = kwargs.get("smooth", self.config.LINE_SMOOTH)
+        marker_symbol = kwargs.get("marker_symbol", self.config.MARKER_SYMOBLS[0])
+        marker_size = kwargs.get("marker_size", self.config.MARKER_SIZE)
+        nofill = kwargs.get("nofill")
+
+        for i, series in enumerate(self.chart2.series):
+            series_color = None
+            if self.config.CUSTOM_COLORS or kwargs.get("custom_colors"):
+                series_color = self.config.PRIMARY_COLORS[
+                    (len(bar_cols) + i) % len(self.config.PRIMARY_COLORS)
+                ]
+            elif kwargs.get("line_color"):
+                series_color = kwargs.get("line_color")
+            else:
+                # if i == 0:
+                #     series_color = "FD625E"
+                pass
+
+            self.excel_helper.set_line_graphical_properties(
+                series,
+                width=line_width,
+                style=line_style,
+                color=series_color,
+                smooth=smooth,
+            )
+            self.excel_helper.set_marker_graphical_properties(
+                series, marker_symbol, marker_size, series_color
+            )
+
+        # Call Chart._plot for general properties, but prevent it from re-applying colors
+        # as we've already done it for both bar and line series.
+        kwargs["chart_position"] = chart_position or self.config.CHART_POSITION
+        kwargs["suppress_chart_position_warning"] = False
+        kwargs["custom_colors"] = (
+            False  # Prevent Chart._plot from re-applying custom colors
+        )
+        kwargs["nofill"] = True  # Prevent Chart._plot from filling anything
+        super()._plot(df, ws, **kwargs)
+
+
 # TODO Coming soon ...
 class LineLineChart(TwoAxesChart):
+    """Combined line-line chart with dual y-axes (not yet implemented)."""
 
-    def __init__(self, config=Config(), excel_helper=None):
+    def __init__(self, config=None, excel_helper=None):
+        """Not yet implemented.
+
+        Raises
+        ------
+        NotImplementedError
+            Always raised.
+        """
 
         raise NotImplementedError("Not implemented yet")

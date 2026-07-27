@@ -2,18 +2,18 @@
 An example to show how to use sql2excel to generate reports if you work with
 SQL from Python
 
-@NOTE sqlalchemy 2.0 does not support positional parameters: 
+NOTE sqlalchemy 2.0 does not support positional parameters:
 https://github.com/sqlalchemy/sqlalchemy/issues/5178
 Despite this, sql2excel implemented a crude way to handle positional parameters
 as they are easier to work with. See the examples below.
 
-@NOTE the queries below used the DVD rental database set up in a PostgreSQL: 
+NOTE the queries below used the DVD rental database set up in a PostgreSQL:
 https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database/
 """
 
 import os
 
-from db_params import connection_string
+from db_params import db_url
 
 from sql2excel.report import Report
 from sql2excel.sqlexec import QueryConfig
@@ -254,7 +254,7 @@ query_configs.append(query_config)
 #  Generate Report
 ####################################
 
-report = Report(connection_string=connection_string)
+report = Report(db_url=db_url)
 
 file_name = os.path.join(
     os.path.dirname(os.path.dirname(__file__)), "data", "query2report.xlsx"

@@ -61,9 +61,9 @@ chart = BarLineChart()
 chart.plot(df, ws)
 
 
-# With Openpyxl default colors
+# With custom default colors
 chart = BarLineChart()
-chart.plot(df, ws, openpyxl_color=True)
+chart.plot(df, ws, custom_colors=True)
 
 # More columns with `data_columns` to select a few
 chart = BarLineChart()

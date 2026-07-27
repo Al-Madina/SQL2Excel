@@ -1,0 +1,76 @@
+site_name: SQL2Excel
+site_description: Export SQL queries and Pandas DataFrames to Excel with charts and data visualization.
+site_author: Ahmed Hassan
+site_url: https://al-madina.github.io/SQL2Excel/
+
+repo_url: https://github.com/Al-Madina/SQL2Excel
+# Remove repo_name to hide the "Edit on..." / repo text
+# repo_name:
+
+theme:
+  name: material
+
+  logo: assets/logo.png
+  favicon: assets/logo.png
+
+  features:
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - content.code.annotate
+    - search.highlight
+    - search.share
+
+  palette:
+    primary: teal
+    accent: teal
+
+  font:
+    text: Inter
+    code: JetBrains Mono
+
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_root_heading: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            merge_init_into_class: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+
+  - Getting Started: getting-started.md
+
+  - User Guide:
+    - Generate Excel from SQL Script: sql-script.md
+    - Generate Excel from SQL Queries: query.md
+    - Generate Excel from DataFrames: dataframe.md
+    - Export Matplotlib Figures to Excel: matplotlib.md
+    - Export External Images to Excel: external-image.md
+    - Supported Charts: chart.md
+
+  - Examples: examples.md
+  - Miscellaneous: miscellaneous.md
+  - Developer Guide: developer-guide.md
+
+  - API Reference:
+    - Core API: api/core.md
+    - CLI API: api/cli.md

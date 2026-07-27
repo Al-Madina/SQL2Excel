@@ -29,7 +29,7 @@ ws = wb.active
 chart = BarChart()
 chart.plot(df, ws, section_heading="Bar Chart: default (column type)")
 
-chart.plot(df, ws, openpyxl_color=True, section_heading="Bar Chart: openpyxl colors")
+chart.plot(df, ws, custom_colors=True, section_heading="Bar Chart: custom colors")
 
 chart.plot(
     df,

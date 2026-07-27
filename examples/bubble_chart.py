@@ -44,10 +44,10 @@ chart.plot(
 chart.plot(
     df,
     ws,
-    section_heading="Bubble Chart (Openpyxl colors): positional analysis",
+    section_heading="Bubble Chart (custom colors): positional analysis",
     xlabel="Relative Field Strength",
     ylabel="Mean-Normalized Citation Score",
-    openpyxl_color=True,
+    custom_colors=True,
 )
 
 file_name = os.path.join(

@@ -1,10 +1,10 @@
 import os
+
 import numpy as np
 import openpyxl as xl
 import pandas as pd
 
 from sql2excel.chart import *
-
 
 wb = xl.Workbook()
 ws = wb.active
@@ -77,7 +77,7 @@ chart.plot(
     df,
     ws,
     # Using the default openpyxl color
-    openpyxl_color=True,
+    custom_colors=False,  # this is the default
     section_heading="Using openpyxl default colors",
 )
 
@@ -102,14 +102,14 @@ chart.plot(
     rotation=30,  # x-axis major ticks
     # show_legend=False,  # You can disable legend
     legend_position="t",  # legend position: 'r', 't', 'l', 'b'
-    # openpyxl_color=True,
+    # custom_colors=True,
     axis_bold_font=True,
 )
 
 
 chart = BarChart()
-chart.plot(df, ws, width=30, section_heading="SQL2Excel colors")
-chart.plot(df, ws, width=30, openpyxl_color=True, section_heading="Openpyxl colors")
+chart.plot(df, ws, width=30, custom_colors=True, section_heading="SQL2Excel colors")
+chart.plot(df, ws, width=30, custom_colors=False, section_heading="Openpyxl colors")
 chart.plot(df, ws, chart_type="bar")
 
 chart = BarChart()
@@ -319,7 +319,7 @@ df = pd.DataFrame(data=[[100 for _ in range(11)]], columns=list(range(11)))
 chart = BarChart()
 
 chart.plot(df, ws, width=20, show_legend=False)
-chart.plot(df, ws, width=20, show_legend=False, openpyxl_color=True)
+chart.plot(df, ws, width=20, show_legend=False, custom_colors=True)
 
 
 file_name = os.path.join(

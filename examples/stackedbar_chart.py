@@ -73,8 +73,8 @@ chart.plot(
 chart.plot(
     df1,
     ws,
-    openpyxl_color=True,
-    section_heading="Using default Openpyxl colors: Stackedbar chart after pivoting data",
+    custom_colors=True,
+    section_heading="Using custom SQL2Excel colors: Stackedbar chart after pivoting data",
 )
 
 file_name = os.path.join(

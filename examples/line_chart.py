@@ -8,7 +8,6 @@ import pandas as pd
 from sql2excel.chart import *
 from sql2excel.config import Config
 
-
 # Create a workbook
 wb = xl.Workbook()
 ws = wb.active
@@ -44,7 +43,7 @@ chart.plot(df, ws)
 
 # Use the default openpyxl colors
 chart = LineChart()
-chart.plot(df, ws, openpyxl_color=True, section_heading="Using Openpyxl colors")
+chart.plot(df, ws, custom_colors=True, section_heading="Using custom SQL2Excel colors")
 
 # Not smooth
 chart = LineChart()
@@ -93,7 +92,7 @@ chart.plot(
     rotation=90,  # x-axis major ticks
     # show_legend=False,  # You can disable legend
     legend_position="t",  # legend position: 'r', 't', 'l', 'b'
-    # openpyxl_color=True,
+    # custom_colors=True,
 )
 
 

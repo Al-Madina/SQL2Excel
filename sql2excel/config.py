@@ -7,6 +7,12 @@ color schemes, and layout options.
 
 
 class Config:
+    """Default configuration constants for charts, formatting, and layout.
+
+    All attributes are class-level constants used throughout the package.
+    Override by passing a custom ``Config`` instance (or subclass) to
+    ``Report``, ``Chart``, or ``ExcelHelper``.
+    """
 
     # Setting for section heading
     SECTION_HEADING_FONT_NAME = "Calibri"
@@ -59,7 +65,7 @@ class Config:
     CHART_WIDTH = None
     CHART_HEIGHT = None
 
-    OPENPYXL_COLORS = False
+    CUSTOM_COLORS = False
 
     # openpyxl default are not appealing
     PRIMARY_COLORS = [

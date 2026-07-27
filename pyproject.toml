@@ -1,0 +1,117 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "SQL2Excel"
+description = "Exporting SQL queries and/or Pandas DataFrames to Excel, with support for chart generation and data visualization."
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Ahmed Hassan", email = "ahmedhassan@aims.ac.za"}
+]
+maintainers = [
+    {name = "Ahmed Hassan", email = "ahmedhassan@aims.ac.za"}
+]
+requires-python = ">=3.10,<3.15"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+]
+dynamic = ["version"]
+# Runtime dependencies 
+dependencies = [
+    "numpy>=1.21,<3.0",
+    "pandas>=1.3,<3.0",
+    "matplotlib>=3.4,<4.0",
+    "seaborn>=0.11,<1.0",
+    "openpyxl==3.1.2",
+    "SQLAlchemy>=1.4,<3.0",
+]
+
+# NOTE: openpyxl is downgraded to openpyxl==3.1.2 because recent version did not render some charts correctly in Excel (e.g. BarLineChart)
+
+
+
+[project.urls]
+Homepage = "https://github.com/Al-Madina/SQL2Excel"
+Repository = "https://github.com/Al-Madina/SQL2Excel"
+
+# Optional dependencies
+[project.optional-dependencies]
+test = [
+    "coverage>=7.0,<8.0",
+    "pytest>=7.0,<9.0",
+    "pytest-cov>=4.0,<6.0",
+]
+
+docs = [
+    "mkdocs<2.0.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+
+# pinpoint mkdocs<2.0.0 because MkDocs 2.0,the underlying framework of Material for MkDocs, will introduce backward-incompatible changes
+
+ssh = [
+    "paramiko>=2.8,<4.0",
+    "sshtunnel>=0.4,<1.0",
+]
+
+postgres = [
+    "psycopg2-binary>=2.9,<3.0",
+]
+# Stick to psycopg2-binary even though for production psycopg2 is recommended.
+# psycopg2 requires C compiler to be installed and this might break the installation of SQL2Excel in some env
+
+postgres-psycopg = [
+    "psycopg>=3.1,<3.4",
+]
+
+# TODO: review the dependencies for each database and make sure they are correct and up-to-date
+mysql = [
+    "pymysql", 
+]
+
+mssql = [
+    "pyodbc",
+]
+
+oracle = [
+    "oracledb",
+]
+
+snowflake = [
+    "snowflake-sqlalchemy",
+]
+
+
+databricks = [
+    "databricks-sqlalchemy",
+]
+
+
+bigquery = [
+    "sqlalchemy-bigquery",
+]
+
+
+
+[tool.setuptools.dynamic]
+version = {attr = "sql2excel.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sql2excel*"]
+
+[project.scripts]
+sql2excel = "sql2excel.cli:main"
+
+[tool.coverage.run]
+source = ["sql2excel"]

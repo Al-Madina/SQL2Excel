@@ -78,13 +78,13 @@ chart.plot(
 chart.plot(
     df,
     ws,
-    section_heading="Pie Chart: openpyxl colors",
+    section_heading="Pie Chart: custom colors",
     show_percentage=True,
     show_category=False,
     show_legend_key=False,
     show_values=True,
     show_series_name=False,
-    openpyxl_color=True,
+    custom_colors=True,
 )
 
 

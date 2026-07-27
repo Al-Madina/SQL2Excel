@@ -783,3 +783,70 @@ examples/db_params.py
 examples/prototyping.py
 examples/with_sql_session.py
 examples/test_db_connect.py
+
+agent-artifact
+.agent*
+.opencode
+opencode.json
+AGENTS.md
+skills-lock.json
+
+
+###############################################################################
+# AI coding agents
+###############################################################################
+
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+.claudeignore
+
+AGENTS.md
+AGENTS.override.md
+.codex/
+
+.github/copilot-instructions.md
+.github/instructions/
+.github/prompts/
+.github/agents/
+.github/skills/
+
+.github/mcp.json
+.mcp.json
+
+.cursorrules
+.cursor/
+.cursorignore
+
+.windsurfrules
+.windsurf/
+.codeiumignore
+
+GEMINI.md
+
+.opencode/
+
+.goose/
+
+.aider*
+
+.continue/
+
+.cline/
+.roo/
+
+# -----------------------------------------------------------------------------
+# Generic AI agent folders
+# -----------------------------------------------------------------------------
+.agents/
+.ai/
+.ai-agents/
+
+# -----------------------------------------------------------------------------
+# Generic prompts / skills / agent definitions
+# -----------------------------------------------------------------------------
+agents/
+skills/
+prompts/
+subagents/
+hooks/
