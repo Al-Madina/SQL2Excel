@@ -1,0 +1,1818 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Export SQL queries and Pandas DataFrames to Excel with charts and data visualization.">
+      
+      
+        <meta name="author" content="Ahmed Hassan">
+      
+      
+        <link rel="canonical" href="https://al-madina.github.io/SQL2Excel/developer-guide/">
+      
+      
+        <link rel="prev" href="../miscellaneous/">
+      
+      
+        <link rel="next" href="../api/core/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Developer Guide - SQL2Excel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#developer-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="SQL2Excel" class="md-header__button md-logo" aria-label="SQL2Excel" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL2Excel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Developer Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Al-Madina/SQL2Excel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="SQL2Excel" class="md-nav__button md-logo" aria-label="SQL2Excel" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    SQL2Excel
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Al-Madina/SQL2Excel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql-script/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Excel from SQL Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../query/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Excel from SQL Queries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dataframe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Excel from DataFrames
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matplotlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Export Matplotlib Figures to Excel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external-image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Export External Images to Excel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supported Charts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miscellaneous/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Miscellaneous
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI Agents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Databases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-docker-for-trial-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Docker for Trial and Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Docker for Trial and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MySQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Project Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Modules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chart-class-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chart Class Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Style
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code Style">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-new-chart-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a New Chart Type
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding a New Chart Type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-create-the-chart-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Create the Chart Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-register-the-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Register the Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-add-to-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Add to Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-write-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Write Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docstring-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docstring Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pull-request-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull Request Process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pull Request Process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-submitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before Submitting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issue-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue Labels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Help
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI Agents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Databases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-docker-for-trial-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Docker for Trial and Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Docker for Trial and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MySQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Project Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Modules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chart-class-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chart Class Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Style
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code Style">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-new-chart-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a New Chart Type
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding a New Chart Type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-create-the-chart-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Create the Chart Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-register-the-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Register the Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-add-to-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Add to Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-write-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Write Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docstring-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docstring Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pull-request-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull Request Process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pull Request Process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-submitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before Submitting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issue-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue Labels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Help
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="developer-guide">Developer Guide</h1>
+<h2 id="contribution">Contribution</h2>
+<p>If you would like to contribute, whether by adding new features, improving the codebase, bug fixing, or providing feedback, your input is greatly appreciated. Please feel free to open issues, submit pull requests, or suggest improvements. If you would like to become a <strong>collaborator</strong>, please drop me an email at <a href="mailto:ahmedhassan@aims.ac.za">ahmedhassan@aims.ac.za</a>.</p>
+<h2 id="ai-agents">AI Agents</h2>
+<p>You are welcome to use AI code agent to contribute to the project. However, note the following:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you use AI agents (Claude, Codex, Opencode, Cursor, etc), please do <strong>not</strong> commit and push your agent config and artifacts to Github repo (e.g <code>.agent</code>, <code>.opencode</code>, <code>CLAUDE.md</code>, <code>AGENTS.md</code>, skills, MCP, etc). This repo does not assume any specific AI agent and publishing these will pollute it!</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The current <code>.gitignore</code> ignore default agent-specific config and artifacts. If your agent files or directories are tracked by <code>git</code>, please add them to <code>.gitignore</code>.</p>
+</div>
+<h2 id="running-tests">Running Tests</h2>
+<ul>
+<li>
+<p>Clone Github repo</p>
+</li>
+<li>
+<p>Activate the virtual environment</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>.env/bin/activate
+</code></pre></div>
+<ul>
+<li>Install the development optional dependencies in the editable mode</li>
+</ul>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[test,docs,postgres]&quot;</span>
+</code></pre></div>
+<p>Repalce <code>postgres</code> with your database dialect (see <a href="../#supported-database">Supported Database</a>)</p>
+<ul>
+<li>Run the tests</li>
+</ul>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/
+</code></pre></div>
+<ul>
+<li>Run the test with the coverage</li>
+</ul>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>--cov<span class="o">=</span>sql2excel
+</code></pre></div>
+<h2 id="databases">Databases</h2>
+<p><code>SQL2Excel</code> is database-agnostic by design. It connects to any database supported by <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> via a standard connection URL. It is currently tested against PostgreSQL and MySQL. If you use another database and encounter issues, please open an issue on GitHub.</p>
+<h3 id="using-docker-for-trial-and-testing">Using Docker for Trial and Testing</h3>
+<p>Docker lets you spin up temporary database instances without installing them on your host machine. <code>SQL2Excel</code> is developed in machine hosting PostgreSQL (Docker is not used). However for MySQL, Docker was used and the instructions to set it up is below.  We will use the DvD rental (also known as Sakila) database to test <code>SQL2Excel</code> for MySQL.</p>
+<h4 id="postgresql">PostgreSQL</h4>
+<p>Docker postgres guide is coming up ...</p>
+<h4 id="mysql">MySQL</h4>
+<p><strong>1. Download and Extract the Sakila Database</strong></p>
+<p>First, download the database schema and data files directly from MySQL and extract them to your local machine. Run the following command (assuming Linux):</p>
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>https://downloads.mysql.com/docs/sakila-db.tar.gz
+tar<span class="w"> </span>-xvf<span class="w"> </span>sakila-db.tar.gz
+</code></pre></div>
+<p>This creates a folder named <code>sakila-db</code>.</p>
+<p><strong>2. Start the MySQL Docker Container</strong></p>
+<p>Pull and start the official MySQL image. We will use version 8.0.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>mysql-sakila<span class="w"> </span><span class="se">\ </span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>secretpassword<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-p<span class="w"> </span><span class="m">3306</span>:3306<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>mysql:8.0
+</code></pre></div>
+<ul>
+<li>
+<p><code>--name mysql-sakila</code>: Gives the container an easy-to-remember name.</p>
+</li>
+<li>
+<p><code>-e MYSQL_ROOT_PASSWORD=...</code>: Sets the administrative password.</p>
+</li>
+<li>
+<p><code>-p 3306:3306</code>: Maps the default MySQL port from inside the container to your local machine, allowing <code>SQL2Excel</code> to connect to MySQL at <code>localhost:3306</code>.</p>
+</li>
+<li>
+<p><code>-d</code>: Runs the container in the background (detached mode).</p>
+</li>
+</ul>
+<p><strong>3. Copy the Database Files into the Container</strong></p>
+<p>To import the SQL files to MySQL, they need to be accessible from inside the running Docker container. You can copy the extracted folder directly into the container's root directory (or any other directory you prefer).</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>cp<span class="w"> </span>sakila-db<span class="w"> </span>mysql-sakila:/sakila-db
+</code></pre></div>
+<p><strong>4. Open the MySQL CLI</strong></p>
+<p>Now, open an interactive terminal session inside the container and launch the MySQL command-line client to query the database.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mysql-sakila<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p
+</code></pre></div>
+<p>When prompted for the password, enter your password you chose in Step 2 above. You should see <code>mysql&gt;</code> in the terminal.</p>
+<p><strong>5. Import the Schema and Data to MySQL</strong></p>
+<p>From within the <code>mysql&gt;</code> CLI, you can execute the SQL files you copied over. You must run the schema file first to create the tables, followed by the data file to populate them:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SOURCE</span><span class="w"> </span><span class="o">/</span><span class="n">sakila</span><span class="o">-</span><span class="n">db</span><span class="o">/</span><span class="n">sakila</span><span class="o">-</span><span class="k">schema</span><span class="p">.</span><span class="k">sql</span><span class="p">;</span>
+<span class="k">SOURCE</span><span class="w"> </span><span class="o">/</span><span class="n">sakila</span><span class="o">-</span><span class="n">db</span><span class="o">/</span><span class="n">sakila</span><span class="o">-</span><span class="k">data</span><span class="p">.</span><span class="k">sql</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>6. Your MySQL DB URL</strong></p>
+<p>Your <code>db_url</code> that you will use to connect <code>SQL2Excel</code> to MySQL would be</p>
+<div class="highlight"><pre><span></span><code><span class="s2">&quot;mysql+pymysql://root:&lt;your-password&gt;@localhost:3306/sakila&quot;</span>
+</code></pre></div>
+<p>Replace <code>&lt;password&gt;</code> with your password from Step 2.</p>
+<p>That's it!</p>
+<h2 id="project-architecture">Project Architecture</h2>
+<p>Understanding the project structure is essential before contributing.</p>
+<h3 id="core-modules">Core Modules</h3>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sql2excel/report.py</code></td>
+<td>Top-level orchestrator that executes queries and writes Excel</td>
+</tr>
+<tr>
+<td><code>sql2excel/sqlexec.py</code></td>
+<td>SQL execution engine and query configuration</td>
+</tr>
+<tr>
+<td><code>sql2excel/parser.py</code></td>
+<td>SQL file parser for annotated queries</td>
+</tr>
+<tr>
+<td><code>sql2excel/chart.py</code></td>
+<td>All chart implementations (Line, Bar, Pie, etc.)</td>
+</tr>
+<tr>
+<td><code>sql2excel/config.py</code></td>
+<td>Default configuration constants</td>
+</tr>
+<tr>
+<td><code>sql2excel/excel_helper.py</code></td>
+<td>openpyxl utility layer</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chart-class-hierarchy">Chart Class Hierarchy</h3>
+<p>All chart types inherit from the <code>Chart</code> base class:</p>
+<div class="highlight"><pre><span></span><code>Chart
+├── LineBasedChart (abstract)
+│   ├── LineChart
+│   └── RadarChart
+├── TwoAxesChart (abstract)
+│   ├── BarLineChart
+├── BarChart
+├── PieChart
+├── AreaChart
+├── ScatterChart
+├── BubbleChart
+├── StackedBarChart
+├── SingleAxisBarLineChart
+└── ImageChart
+</code></pre></div>
+<h2 id="code-style">Code Style</h2>
+<h3 id="python-conventions">Python Conventions</h3>
+<ul>
+<li>Follow PEP 8 for code formatting</li>
+<li>Use type hints for all function signatures</li>
+<li>Write docstrings for public classes and methods</li>
+<li>Keep functions focused</li>
+</ul>
+<h3 id="naming-conventions">Naming Conventions</h3>
+<ul>
+<li><strong>Classes</strong>: PascalCase (<code>BarChart</code>, <code>QueryConfig</code>)</li>
+<li><strong>Functions</strong>: snake_case (<code>parse_sql_file</code>, <code>generate_report</code>)</li>
+<li><strong>Constants</strong>: UPPER_SNAKE_CASE (<code>DEFAULT_FONT_SIZE</code>)</li>
+<li><strong>Private methods</strong>: Leading underscore (<code>_apply_style</code>)</li>
+</ul>
+<h2 id="adding-a-new-chart-type">Adding a New Chart Type</h2>
+<p>To add a new chart type to <code>SQL2Excel</code>:</p>
+<h3 id="step-1-create-the-chart-class">Step 1: Create the Chart Class</h3>
+<p>In <code>sql2excel/chart.py</code>, add a new class inheriting from <code>Chart</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">YourNewChart</span><span class="p">(</span><span class="n">Chart</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Description of your chart type.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">excel_helper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">excel_helper</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">worksheet</span><span class="p">,</span> <span class="n">param1</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">param2</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Specific description here</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            Data to plot.</span>
+<span class="sd">        worksheet : openpyxl.worksheet.worksheet.Worksheet</span>
+<span class="sd">            Target worksheet.</span>
+<span class="sd">        param1 : int</span>
+<span class="sd">            First keyword argument.</span>
+<span class="sd">        param2 : int</span>
+<span class="sd">            Second keyword argument</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Implementation here</span>
+
+        <span class="c1"># Call the super method to finalize the plot</span>
+        <span class="c1"># Note this is the private `_plot` (not the public `plot`)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ws</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="step-2-register-the-chart">Step 2: Register the Chart</h3>
+<p>Add the new class to <code>sql2excel/__init__.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sql2excel.chart</span><span class="w"> </span><span class="kn">import</span> <span class="n">YourNewChart</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># ... existing exports</span>
+    <span class="s2">&quot;YourNewChart&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
+<h3 id="step-3-add-to-report">Step 3: Add to Report</h3>
+<p>In <code>sql2excel/report.py</code>, update the chart type mapping:</p>
+<div class="highlight"><pre><span></span><code><span class="n">CHART_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># ... existing types</span>
+    <span class="s2">&quot;your_new&quot;</span><span class="p">:</span> <span class="n">YourNewChart</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="step-4-write-tests">Step 4: Write Tests</h3>
+<p>Create tests in <code>tests/test_chart.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_your_new_chart</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">sample_df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test YourNewChart plotting.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Your assertions here </span>
+</code></pre></div>
+<h2 id="testing-guidelines">Testing Guidelines</h2>
+<ul>
+<li>Use pytest</li>
+<li>Place tests in <code>tests/</code> directory</li>
+<li>Name test files <code>test_&lt;module&gt;.py</code></li>
+<li>Use pytest fixtures defined in <code>tests/setup.py</code></li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<h3 id="docstring-format">Docstring Format</h3>
+<p>Use NumPy-style docstrings:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">your_function</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Short summary.</span>
+
+<span class="sd">    Longer description if needed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    param1 : str</span>
+<span class="sd">        Description of param1.</span>
+<span class="sd">    param2 : int</span>
+<span class="sd">        Description of param2.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        Description of return value.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If param2 is negative.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div>
+<h3 id="building-documentation">Building Documentation</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install docs dependencies</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[docs]&quot;</span>
+
+<span class="c1"># Build static site</span>
+mkdocs<span class="w"> </span>build
+
+<span class="c1"># Serve documentation locally</span>
+mkdocs<span class="w"> </span>serve
+</code></pre></div>
+<h2 id="pull-request-process">Pull Request Process</h2>
+<h3 id="before-submitting">Before Submitting</h3>
+<ol>
+<li>Write tests for your code. Please do <strong>not</strong> push code that is not test</li>
+<li>Run the full test suite: <code>pytest tests/</code></li>
+<li>Ensure all tests pass</li>
+<li>Update documentation if adding new features</li>
+</ol>
+<h2 id="issue-labels">Issue Labels</h2>
+<ul>
+<li><code>bug</code>: Something isn't working as expected</li>
+<li><code>enhancement</code>: New feature or request</li>
+<li><code>documentation</code>: Improvements to docs</li>
+</ul>
+<h2 id="getting-help">Getting Help</h2>
+<ul>
+<li>Open an issue on GitHub for bugs or feature requests</li>
+<li>Email: <a href="mailto:ahmedhassan@aims.ac.za">ahmedhassan@aims.ac.za</a></li>
+<li>Review existing documentation before asking questions</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.top", "navigation.indexes", "content.code.copy", "content.code.annotate", "search.highlight", "search.share"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

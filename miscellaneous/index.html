@@ -1,0 +1,2212 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Export SQL queries and Pandas DataFrames to Excel with charts and data visualization.">
+      
+      
+        <meta name="author" content="Ahmed Hassan">
+      
+      
+        <link rel="canonical" href="https://al-madina.github.io/SQL2Excel/miscellaneous/">
+      
+      
+        <link rel="prev" href="../examples/">
+      
+      
+        <link rel="next" href="../developer-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Miscellaneous - SQL2Excel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#miscellaneous" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="SQL2Excel" class="md-header__button md-logo" aria-label="SQL2Excel" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL2Excel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Miscellaneous
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Al-Madina/SQL2Excel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="SQL2Excel" class="md-nav__button md-logo" aria-label="SQL2Excel" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    SQL2Excel
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Al-Madina/SQL2Excel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql-script/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Excel from SQL Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../query/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Excel from SQL Queries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dataframe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Excel from DataFrames
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matplotlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Export Matplotlib Figures to Excel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external-image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Export External Images to Excel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supported Charts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Miscellaneous
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Miscellaneous
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-result-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlling Result Placement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overriding-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overriding Defaults
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-connection-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Connection Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#silent-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Silent Mode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataframe-pivoting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DataFrame Pivoting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exec-directive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exec Directive
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-sheet-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Sheet Output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql-parameterization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL Parameterization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL Parameterization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query_param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        query_param
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sheet_param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sheet_param
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dbpass-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .dbpass File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-column-headings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Column Headings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-chart-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Chart Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chart-specific-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chart-Specific Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chart-Specific Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bar-stacked-bar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bar / Stacked Bar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-radar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Line / Radar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pie
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scatter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#barlinechart-dual-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BarLineChart (Dual Axes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#singleaxisbarlinechart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SingleAxisBarLineChart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imagechart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ImageChart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#featured-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Featured Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Colors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Colors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#color-scheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color Scheme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#font-and-shape-colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Font and Shape Colors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-result-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlling Result Placement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overriding-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overriding Defaults
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-connection-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Connection Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#silent-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Silent Mode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataframe-pivoting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DataFrame Pivoting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exec-directive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exec Directive
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-sheet-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Sheet Output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql-parameterization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL Parameterization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL Parameterization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query_param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        query_param
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sheet_param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sheet_param
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dbpass-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .dbpass File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-column-headings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Column Headings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-chart-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Chart Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chart-specific-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chart-Specific Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chart-Specific Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bar-stacked-bar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bar / Stacked Bar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-radar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Line / Radar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pie
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scatter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#barlinechart-dual-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BarLineChart (Dual Axes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#singleaxisbarlinechart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SingleAxisBarLineChart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imagechart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ImageChart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#featured-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Featured Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Colors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Colors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#color-scheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color Scheme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#font-and-shape-colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Font and Shape Colors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="miscellaneous">Miscellaneous</h1>
+<h2 id="controlling-result-placement">Controlling Result Placement</h2>
+<p>In <code>SQL2Excel</code>, the starting row for writing results is dynamically determined based on the existing data and charts in the current sheet.
+You can customize the spacing between two results set or between a result set and chart in the <code>sql2excel.Config</code> class:</p>
+<ul>
+<li><code>SEPARATOR</code>: Specifies the number of empty rows to insert between two result sets. It is applied <strong>after</strong> the row in which the new result will be written is calculated automatically depending on the existing data in the current sheet. For example, if the first result has 10 rows and you set the <code>SEPARATOR=2</code>, the second result will start at row 12.</li>
+<li>The <code>CHART_HEIGHT_SCALE</code>: defines the number of rows the chart occupies, calculated as <code>rows = CHART_HEIGHT_SCALE * chart_height</code>.</li>
+</ul>
+<p><strong>Note:</strong> By default, <code>CHART_HEIGHT_SCALE</code> is set to <code>1.9</code>. However, the actual chart size will depend on operating system and device. If the default value does not meet your needs, adjust as required in your OS and device.</p>
+<p>If required, the starting position of the result set can be determined manually with the arguments <code>row_start</code> and/or <code>column_start</code> of the <code>plot</code> or <code>write_dataframe</code> method of <code>Chart</code> class (and its subclasses).</p>
+<h2 id="overriding-defaults">Overriding Defaults</h2>
+<p>For consistency, some settings (e.g. font properties, color theme, etc) are set globally. There are two ways to override these defaults:</p>
+<ul>
+<li>Provide keyword arguments to <code>plot</code> or <code>write_dataframe</code> methods of the <code>Chart</code> class (and its subclasses).</li>
+<li>Create a <code>Config</code> object and override its attributes as needed.</li>
+</ul>
+<p>The first method does not cover all attributes declared in <code>Config</code> class. The second approach is the preferred one. An example is shown below</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sql2excel.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sql2excel.chart</span><span class="w"> </span><span class="kn">import</span> <span class="n">BarChart</span>
+
+<span class="c1"># Create a config object</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
+
+<span class="c1"># Change font size of the chart title to 14 pt (default is 11 pt)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">CHART_TITLE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">1400</span>
+
+<span class="c1"># Use normal font weight</span>
+<span class="n">config</span><span class="o">.</span><span class="n">CHART_TITLE_FONT_BOLD</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Pass config to chart as a KEYWORD argument</span>
+<span class="n">chart</span> <span class="o">=</span> <span class="n">BarChart</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+
+<span class="c1"># You can reuse `config` with other charts to apply the same settings across the report</span>
+</code></pre></div>
+<h2 id="database-connection-options">Database Connection Options</h2>
+<p><code>Report</code> accepts several connection types. You must provide exactly one of:</p>
+<ul>
+<li><code>db_url</code>: A SQLAlchemy connection URL string.</li>
+<li><code>engine</code>: An existing <code>sqlalchemy.engine.Engine</code>.</li>
+<li><code>conn</code>: An existing <code>sqlalchemy.engine.Connection</code>.</li>
+<li><code>session</code>: An existing <code>sqlalchemy.orm.Session</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sql2excel.report</span><span class="w"> </span><span class="kn">import</span> <span class="n">Report</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql://user:pass@localhost/mydb&quot;</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">Report</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">report</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">query_configs</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;output.xlsx&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="silent-mode">Silent Mode</h2>
+<p>When <code>silent=True</code>, query execution errors produce warnings instead of raising exceptions. This is useful when running multiple queries and you want the report to continue even if one query fails.</p>
+<div class="highlight"><pre><span></span><code><span class="n">report</span> <span class="o">=</span> <span class="n">Report</span><span class="p">(</span><span class="n">db_url</span><span class="o">=</span><span class="n">db_url</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="dataframe-pivoting">DataFrame Pivoting</h2>
+<p>Query results can be pivoted before writing to Excel by passing <code>index</code>, <code>columns</code>, and <code>values</code> to <code>QueryConfig</code>. This uses <code>pd.pivot</code> internally.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sql2excel.sqlexec</span><span class="w"> </span><span class="kn">import</span> <span class="n">QueryConfig</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QueryConfig</span><span class="p">(</span>
+    <span class="n">sql</span><span class="o">=</span><span class="s2">&quot;SELECT country, year, revenue FROM sales;&quot;</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="s2">&quot;revenue&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>In a SQL script, this is expressed via directives:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- index=country, columns=year, values=revenue</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sales</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="exec-directive">Exec Directive</h2>
+<p>Use <code>-- exec</code> to execute a query (e.g., for DDL or DML) without writing results to Excel. Queries without <code>chart</code> or <code>exec</code> are skipped when parsing a SQL script.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- exec</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">source</span><span class="p">;</span>
+
+<span class="c1">-- chart=bar</span>
+<span class="c1">-- title=Revenue by Region</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">region</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">revenue</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">region</span><span class="p">;</span>
+
+<span class="c1">-- The query below will be SKIPPED</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">foo</span><span class="p">.</span><span class="n">bar</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="multi-sheet-output">Multi-Sheet Output</h2>
+<p>Results can be placed on named worksheets using the <code>sheetname</code> directive. All queries sharing the same <code>sheetname</code> are written to the same sheet.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- sheetname=Revenue</span>
+<span class="c1">-- chart=bar</span>
+<span class="c1">-- title=Revenue by Region</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">region</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sales</span><span class="p">;</span>
+
+<span class="c1">-- sheetname=Costs</span>
+<span class="c1">-- chart=bar</span>
+<span class="c1">-- title=Cost by Region</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">region</span><span class="p">,</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">costs</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="sql-parameterization">SQL Parameterization</h2>
+<h3 id="query_param">query_param</h3>
+<p>Use <code>query_param</code> to define named parameters with pipe-separated values. The parser generates the Cartesian product of all <code>query_param</code> directives, creating one <code>QueryConfig</code> per combination.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- query_param: year = 2023 | 2024</span>
+<span class="c1">-- chart=bar</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">region</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="k">year</span><span class="p">;</span>
+</code></pre></div>
+<p>This produces two queries: one for <code>year=2023</code> and one for <code>year=2024</code>. The parameter name in <code>section_heading</code> is replaced with the actual value.</p>
+<h3 id="sheet_param">sheet_param</h3>
+<p>Use <code>sheet_param</code> to repeat the same analysis for different entities, each on a separate worksheet. Only one <code>sheet_param</code> name is allowed.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- sheet_param: country = USA | UK | Germany</span>
+<span class="c1">-- chart=bar</span>
+<span class="c1">-- title=Revenue in :country</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">region</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">country</span><span class="p">;</span>
+</code></pre></div>
+<p>This creates three sheets (<code>USA</code>, <code>UK</code>, <code>Germany</code>), each containing the same query filtered by the respective country.</p>
+<h2 id="cli-environment-variables">CLI Environment Variables</h2>
+<p>The CLI reads database parameters from environment variables when flags are not provided:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Maps to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DB_DIALECT</code></td>
+<td><code>--dialect</code></td>
+</tr>
+<tr>
+<td><code>DB_HOST</code></td>
+<td><code>--host</code></td>
+</tr>
+<tr>
+<td><code>DB_PORT</code></td>
+<td><code>--port</code></td>
+</tr>
+<tr>
+<td><code>DB_USER</code></td>
+<td><code>--user</code></td>
+</tr>
+<tr>
+<td><code>DB_PASSWORD</code></td>
+<td><code>--password</code></td>
+</tr>
+<tr>
+<td><code>DB_NAME</code></td>
+<td><code>--dbname</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">DB_DIALECT</span><span class="o">=</span>postgresql
+<span class="nb">export</span><span class="w"> </span><span class="nv">DB_HOST</span><span class="o">=</span>localhost
+<span class="nb">export</span><span class="w"> </span><span class="nv">DB_PORT</span><span class="o">=</span><span class="m">5432</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DB_USER</span><span class="o">=</span>username
+<span class="nb">export</span><span class="w"> </span><span class="nv">DB_PASSWORD</span><span class="o">=</span>secret
+<span class="nb">export</span><span class="w"> </span><span class="nv">DB_NAME</span><span class="o">=</span>mydb
+
+sql2excel<span class="w"> </span>query.sql<span class="w"> </span>--output<span class="w"> </span>report.xlsx
+</code></pre></div>
+<h2 id="dbpass-file">.dbpass File</h2>
+<p>The CLI can read passwords from <code>~/.dbpass</code> instead of passing them on the command line. Each line follows the format:</p>
+<div class="highlight"><pre><span></span><code>dialect:host:port:user:password:dbname
+</code></pre></div>
+<p>Use <code>*</code> as a wildcard in any field. If multiple entries match, the most specific one (fewest wildcards) wins. Lines starting with <code>#</code> are ignored. The file must have <code>0600</code> permissions and be owned by the current user.</p>
+<div class="highlight"><pre><span></span><code># ~/.dbpass example
+postgresql:localhost:5432:username:secret:mydb
+postgresql:*:5432:username:secret:*
+</code></pre></div>
+<p>The difference between these two entries lies in their scope:</p>
+<ul>
+<li>
+<p>Line 1 (Specific): Applies credentials only when connecting to the <code>mydb</code> database on <code>localhost</code>.</p>
+</li>
+<li>
+<p>Line 2 (Wildcard): Applies credentials to any database on any host (using * wildcards).</p>
+</li>
+</ul>
+<p>Use Line 1 to restrict credentials to a specific local database, and Line 2 as a catch-all fallback for any Postgres connection.</p>
+<div class="admonition note">
+<p class="admonition-title">Matching Priority</p>
+<p>If multiple lines match your connection details, SQL2Excel automatically uses the most specific match available.</p>
+</div>
+<h2 id="custom-column-headings">Custom Column Headings</h2>
+<p>Override DataFrame column names with the <code>headings</code> directive. Provide a list of strings in the annotation.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- chart=bar</span>
+<span class="c1">-- headings=[&quot;Region&quot;, &quot;Total Revenue ($M)&quot;]</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">region</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sales</span><span class="p">;</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Custom headings are most useful when using dataframes. Use <code>headings</code> to quickly rename export columns. No need to modify column names in Pandas first.</p>
+</div>
+<h2 id="available-chart-types">Available Chart Types</h2>
+<table>
+<thead>
+<tr>
+<th>Directive</th>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chart</code></td>
+<td><code>Chart</code></td>
+<td>Data-only (no chart, just writes the DataFrame).</td>
+</tr>
+<tr>
+<td><code>bar</code></td>
+<td><code>BarChart</code></td>
+<td>Column or bar chart.</td>
+</tr>
+<tr>
+<td><code>stackedbar</code></td>
+<td><code>StackedBarChart</code></td>
+<td>Stacked or percent-stacked bar chart.</td>
+</tr>
+<tr>
+<td><code>line</code></td>
+<td><code>LineChart</code></td>
+<td>Line chart.</td>
+</tr>
+<tr>
+<td><code>pie</code></td>
+<td><code>PieChart</code></td>
+<td>Pie chart with data labels.</td>
+</tr>
+<tr>
+<td><code>area</code></td>
+<td><code>AreaChart</code></td>
+<td>Area chart.</td>
+</tr>
+<tr>
+<td><code>radar</code></td>
+<td><code>RadarChart</code></td>
+<td>Radar (spider) chart.</td>
+</tr>
+<tr>
+<td><code>scatter</code></td>
+<td><code>ScatterChart</code></td>
+<td>Scatter plot.</td>
+</tr>
+<tr>
+<td><code>bubble</code></td>
+<td><code>BubbleChart</code></td>
+<td>Bubble chart (x, y, size from first 3 columns).</td>
+</tr>
+<tr>
+<td><code>barline</code></td>
+<td><code>BarLineChart</code></td>
+<td>Combined bar and line with dual y-axes.</td>
+</tr>
+<tr>
+<td><code>singleaxisbarline</code></td>
+<td><code>SingleAxisBarLineChart</code></td>
+<td>Combined bar and line on a single y-axis.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1">-- chart=scatter</span>
+<span class="c1">-- title=Revenue vs. Cost</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">revenue</span><span class="p">,</span><span class="w"> </span><span class="n">cost</span><span class="p">,</span><span class="w"> </span><span class="n">region</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sales</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="chart-specific-options">Chart-Specific Options</h2>
+<h3 id="bar-stacked-bar">Bar / Stacked Bar</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chart_type</code></td>
+<td>Bar orientation: <code>"col"</code> (vertical, default) or <code>"bar"</code> (horizontal).</td>
+</tr>
+<tr>
+<td><code>chart_grouping</code></td>
+<td>Stacked bar grouping: <code>"percentStacked"</code> (default) or <code>"stacked"</code>.</td>
+</tr>
+<tr>
+<td><code>chart_overlap</code></td>
+<td>Overlap percentage for stacked bar (default: <code>100</code>).</td>
+</tr>
+<tr>
+<td><code>vary_color</code></td>
+<td>Assign a different color to each bar in a single-series chart.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="line-radar">Line / Radar</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>smooth</code></td>
+<td>Smooth the lines (default: <code>True</code>).</td>
+</tr>
+<tr>
+<td><code>line_width</code></td>
+<td>Line width in points (default: <code>1.5</code>).</td>
+</tr>
+<tr>
+<td><code>line_style</code></td>
+<td>Dash style: <code>"solid"</code>, <code>"sysDash"</code>, <code>"dot"</code>, <code>"dashDot"</code>, etc.</td>
+</tr>
+<tr>
+<td><code>line_color</code></td>
+<td>Override line color for all series.</td>
+</tr>
+<tr>
+<td><code>marker_symbol</code></td>
+<td>Marker shape: <code>"circle"</code>, <code>"triangle"</code>, <code>"diamond"</code>, etc.</td>
+</tr>
+<tr>
+<td><code>marker_size</code></td>
+<td>Marker size (default: <code>6</code>).</td>
+</tr>
+<tr>
+<td><code>chart_type</code></td>
+<td>Radar style: <code>"standard"</code>, <code>"marker"</code>, or <code>"filled"</code>.</td>
+</tr>
+<tr>
+<td><code>radar_unit</code></td>
+<td>Custom unit step for the radar y-axis.</td>
+</tr>
+<tr>
+<td><code>radar_unit_steps</code></td>
+<td>Number of divisions for the radar y-axis.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pie">Pie</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>show_percentage</code></td>
+<td>Show percentage labels (default: <code>True</code>).</td>
+</tr>
+<tr>
+<td><code>show_category</code></td>
+<td>Show category names (default: <code>True</code>).</td>
+</tr>
+<tr>
+<td><code>show_legend_key</code></td>
+<td>Show legend key in labels (default: <code>False</code>).</td>
+</tr>
+<tr>
+<td><code>show_values</code></td>
+<td>Show values in labels (default: <code>False</code>).</td>
+</tr>
+<tr>
+<td><code>show_series_name</code></td>
+<td>Show series name in labels (default: <code>False</code>).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scatter">Scatter</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>marker_symbols</code></td>
+<td>List of marker symbols to cycle through per series.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="barlinechart-dual-axes">BarLineChart (Dual Axes)</h3>
+<p>The first data column is plotted on the primary axis; remaining columns on the secondary axis. Secondary-axis settings use a <code>2</code> suffix.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ylabel2</code></td>
+<td>Label for the secondary y-axis.</td>
+</tr>
+<tr>
+<td><code>ylim2</code></td>
+<td>Limits <code>(min, max)</code> for the secondary y-axis.</td>
+</tr>
+<tr>
+<td><code>y_orientation2</code></td>
+<td>Orientation of the secondary y-axis.</td>
+</tr>
+<tr>
+<td><code>yaxis_major_unit2</code></td>
+<td>Major unit for the secondary y-axis.</td>
+</tr>
+<tr>
+<td><code>y_log_base2</code></td>
+<td>Logarithmic base for the secondary y-axis.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="singleaxisbarlinechart">SingleAxisBarLineChart</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bar_columns</code></td>
+<td>List of column indices to plot as bars.</td>
+</tr>
+<tr>
+<td><code>line_columns</code></td>
+<td>List of column indices to plot as lines.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, the first data column is the bar and the rest are lines.</p>
+<h3 id="imagechart">ImageChart</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add_image</code></td>
+<td>Accepts a file path (str) or a <code>matplotlib.figure.Figure</code>.</td>
+</tr>
+<tr>
+<td><code>image_width</code></td>
+<td>Image width in pixels.</td>
+</tr>
+<tr>
+<td><code>image_height</code></td>
+<td>Image height in pixels.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="featured-options">Featured Options</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data Writing</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>write_dataframe</code></td>
+<td>A method of <code>Chart</code> (and its subclasses) to write a result set (SQL/DataFrame) into an Excel sheet.</td>
+</tr>
+<tr>
+<td><code>write_dataframes_side_by_side</code></td>
+<td>A method of <code>Chart</code> (and its subclasses) to write multiple DataFrames side by side in an Excel sheet.</td>
+</tr>
+<tr>
+<td><strong>Chart Generation</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>plot</code></td>
+<td>A method of <code>Chart</code> (and its subclasses) to plot charts</td>
+</tr>
+<tr>
+<td><strong>Manual Placement of Resultset</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>column_start</code></td>
+<td>Sets the starting column for writing data. Defaults to 1.</td>
+</tr>
+<tr>
+<td><code>row_start</code></td>
+<td>Sets the starting row for writing data. The default is determined dynamically depending on the existing data in the sheet.</td>
+</tr>
+<tr>
+<td><code>chart_position</code></td>
+<td>Specifies the position of the chart relative to data. Defaults to 'right' (the chart is written next to the data). Possible values: 'right' and 'bottom'.</td>
+</tr>
+<tr>
+<td><strong>Data for Charts</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>data_columns</code></td>
+<td>Specifies the columns to be used for chart data. Default all columns will be used and the first column is assumed the category (the x-axis). Useful when the specified columns are not consecutive.</td>
+</tr>
+<tr>
+<td><code>data_column_start</code></td>
+<td>Specifies the starting column for data in the chart. Useful when the specified columns are consecutive.</td>
+</tr>
+<tr>
+<td><code>data_column_end</code></td>
+<td>Specifies the end column for data in the chart. Useful when the specified columns are consecutive.</td>
+</tr>
+<tr>
+<td><strong>Chart Formatting</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>chart_shape</code></td>
+<td>Sets the shape of the chart (same as in Openpyxl).</td>
+</tr>
+<tr>
+<td><code>chart_style</code></td>
+<td>Sets the style of the chart (same as in Openpyxl).</td>
+</tr>
+<tr>
+<td><code>legend_position</code></td>
+<td>Sets the position of the chart legend.</td>
+</tr>
+<tr>
+<td><code>show_legend</code></td>
+<td>Determines whether to show the chart legend.</td>
+</tr>
+<tr>
+<td><code>smooth</code></td>
+<td>Sets whether the lines are smoothed or not (relevant for LineChart only).</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>Sets the height of the chart.</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td>Sets the width of the chart.</td>
+</tr>
+<tr>
+<td><code>border_line_color</code></td>
+<td>Sets the border line color for the chart series.</td>
+</tr>
+<tr>
+<td><code>line_color</code></td>
+<td>Sets the line color for the chart series.</td>
+</tr>
+<tr>
+<td><code>line_style</code></td>
+<td>Sets the line style for the chart series.</td>
+</tr>
+<tr>
+<td><code>line_width</code></td>
+<td>Sets the line width for the chart series.</td>
+</tr>
+<tr>
+<td><code>nofill</code></td>
+<td>Prevents filling the chart series with colors.</td>
+</tr>
+<tr>
+<td><code>marker_size</code></td>
+<td>Sets the size of the markers on the chart series.</td>
+</tr>
+<tr>
+<td><code>marker_symbol</code></td>
+<td>Sets the symbol of the markers on the chart series.</td>
+</tr>
+<tr>
+<td><strong>Chart Title</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Sets the title of the chart.</td>
+</tr>
+<tr>
+<td><code>title_font_name</code></td>
+<td>Sets the font name of chart title..</td>
+</tr>
+<tr>
+<td><code>title_font_size</code></td>
+<td>Sets the font size of chart title..</td>
+</tr>
+<tr>
+<td><code>title_font_color</code></td>
+<td>Sets the color of the font of chart title.</td>
+</tr>
+<tr>
+<td><code>title_font_bold</code></td>
+<td>Whether to set the chart title's font to bold.</td>
+</tr>
+<tr>
+<td><strong>Axis Settings</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>x_log_base</code></td>
+<td>Sets the logarithmic base for the x-axis.</td>
+</tr>
+<tr>
+<td><code>y_log_base</code></td>
+<td>Sets the logarithmic base for the y-axis.</td>
+</tr>
+<tr>
+<td><code>xlim</code></td>
+<td>Sets the limits for the x-axis.</td>
+</tr>
+<tr>
+<td><code>ylim</code></td>
+<td>Sets the limits for the y-axis.</td>
+</tr>
+<tr>
+<td><code>xlabel</code></td>
+<td>Sets the label for the x-axis.</td>
+</tr>
+<tr>
+<td><code>ylabel</code></td>
+<td>Sets the label for the y-axis.</td>
+</tr>
+<tr>
+<td><code>rotation</code></td>
+<td>Sets the rotation of the x-axis tick labels.</td>
+</tr>
+<tr>
+<td><code>y_orientation</code></td>
+<td>Sets the orientation of the y-axis.</td>
+</tr>
+<tr>
+<td><code>yaxis_major_unit</code></td>
+<td>Sets the major unit for the y-axis.</td>
+</tr>
+<tr>
+<td><code>axis_font_name</code></td>
+<td>Sets the the font name of the xlabel and ylabel.</td>
+</tr>
+<tr>
+<td><code>axis_font_size</code></td>
+<td>Sets the the font size of the xlabel and ylabel.</td>
+</tr>
+<tr>
+<td><code>axis_font_color</code></td>
+<td>Sets the the font color of the xlabel and ylabel.</td>
+</tr>
+<tr>
+<td><code>axis_font_bold</code></td>
+<td>Whether to set the the font of the xlabel and ylabel to bold.</td>
+</tr>
+<tr>
+<td><code>xtick_label_position</code></td>
+<td>Placement of xticks.</td>
+</tr>
+<tr>
+<td><strong>Miscellaneous</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>add_image</code> (ImageChart)</td>
+<td>Adds an image to the sheet. Useful for including Matplotlib figures and/or externally generated figures.</td>
+</tr>
+<tr>
+<td><code>section_heading</code></td>
+<td>A title to add in the cell above the DataFrame.</td>
+</tr>
+<tr>
+<td><code>headings</code></td>
+<td>Custom column headings to use instead of the DataFrame's column names.</td>
+</tr>
+<tr>
+<td><strong>DataFrame Pivoting</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>index</code></td>
+<td>Column to use to make new frame’s columns.</td>
+</tr>
+<tr>
+<td><code>columns</code></td>
+<td>Column to pivot into new column headings.</td>
+</tr>
+<tr>
+<td><code>values</code></td>
+<td>Column to to use for populating new frame’s values.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="colors">Colors</h2>
+<h3 id="color-scheme">Color Scheme</h3>
+<p><code>SQL2Excel</code> overrides the default color scheme of <code>Openpyxl</code>. The color scheme of <code>SQL2Excel</code> is shown below.</p>
+<p><img alt="SQL2Excel Color Theme" src="../assets/sql2excel_color_theme.png" /></p>
+<p>The default <code>Openpyxl</code> color theme is shown below.</p>
+<p><img alt="Openpyxl Color Theme" src="../assets/openpyxl_color_theme.png" /></p>
+<p>You can provide your own colors by overriding <code>PRIMARY_COLORS</code> of <code>Config</code> class.
+You can do that by creating an instance of <code>Config</code> class and overriding its <code>PRIMARY_COLORS</code> attribute and set its <code>CUSTOM_COLORS</code> to <code>True</code>. Alternatively, you can pass <code>custom_colors=True</code> to the <code>plot</code> method of the <code>Chart</code> class.
+You can also revert back to <code>Openpyxl</code> default color by setting <code>CUSTOM_COLORS</code> to <code>False</code> or passing <code>custom_colors=False</code> to the <code>plot</code> method of the <code>Chart</code> class. An example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">chart</span> <span class="o">=</span> <span class="n">BarChart</span><span class="p">()</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ws</span><span class="p">,</span>  <span class="n">custom_colors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>If you are reusing the custom colors a better way is shown below:</p>
+<div class="highlight"><pre><span></span><code><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">CUSTOM_COLORS</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="c1"># Optional, you can provide you own colors</span>
+<span class="c1"># config.PRIMARY_COLORS = [&quot;#FF0000&quot;, &quot;#00FF00&quot;, &quot;#0000FF&quot;]</span>
+
+
+<span class="c1"># Create a chart object with the new config</span>
+<span class="n">chart</span> <span class="o">=</span> <span class="n">BarChart</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ws</span><span class="p">)</span>
+
+<span class="c1"># Reuse the new config object with another chart</span>
+<span class="n">chart</span> <span class="o">=</span> <span class="n">LineChart</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ws</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="font-and-shape-colors">Font and Shape Colors</h3>
+<p>You can provide the colors for chart title and the labels for the x-axis and y-axis by specifying the <em>color name</em> or the <em>color code</em> in hex format. If a color name is provided, it must be chosen as a <code>prstClr</code> color as in the <code>openpyxl</code> guide <a href="https://openpyxl.readthedocs.io/en/stable/api/openpyxl.drawing.colors.html">(here)</a> where all available <code>prstClr</code> colors are listed.</p>
+<p>The color of the section heading (the cell above the data and chart) can only provided as a color code. You can use online color pickers to find the color code of your choice such as <a href="https://htmlcolorcodes.com/color-picker/">this color picker</a>.</p>
+<p>Shape colors (line colors and fill colors) should be provided as <em>color code</em> in the hex format</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.top", "navigation.indexes", "content.code.copy", "content.code.annotate", "search.highlight", "search.share"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
