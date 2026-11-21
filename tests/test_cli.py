@@ -186,6 +186,43 @@ def test_main_success(
 
 @patch("sql2excel.cli.argparse.ArgumentParser")
 @patch("sql2excel.cli.os.path.isfile")
+@patch("sql2excel.cli.os.path.isdir")
+@patch("sql2excel.cli.parse_sql_file")
+@patch("sql2excel.cli.Report")
+@patch("sql2excel.cli.URL.create")
+def test_main_bare_output_filename_skips_dir_check(
+    mock_url_create,
+    mock_report_cls,
+    mock_parse,
+    mock_isdir,
+    mock_isfile,
+    mock_parser_cls,
+):
+    # `--output report.xlsx` (as in the README) has no directory part, so the
+    # output-directory check must not run: os.path.isdir("") is False.
+    mock_parser = mock_parser_cls.return_value
+    mock_parser.error.side_effect = SystemExit
+    mock_parser.parse_args.return_value = argparse.Namespace(
+        sql_file="query.sql",
+        dialect="postgres",
+        host="localhost",
+        port=5432,
+        user="user",
+        password="password",
+        dbname="db",
+        output="report.xlsx",
+    )
+    mock_isfile.return_value = True
+    mock_isdir.return_value = False
+
+    main()
+
+    mock_parser.error.assert_not_called()
+    mock_report_cls.return_value.generate.assert_called_once()
+
+
+@patch("sql2excel.cli.argparse.ArgumentParser")
+@patch("sql2excel.cli.os.path.isfile")
 def test_main_input_file_not_found(mock_isfile, mock_parser_cls):
     mock_parser = mock_parser_cls.return_value
     mock_parser.error.side_effect = SystemExit
